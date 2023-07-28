@@ -1,17 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+
 import './Body.css';
 
+const api = axios.create({
+    baseURL: ''
+})
+
 function NewSalespersonBody() {
+
+    const [firstName, setFirstName] = useState(null);
+    const [lastName, setLastName] = useState(null);
+    const [id, setId] = useState(null);
+    const [err, setErr] = useState(null);
+
+    const addNewSalesperson = async () => {
+        if(!firstName || !lastName || !id) {
+            setErr('Please fill all the fields');
+            return;
+        }
+        try {   
+            api.post('/salespeople', {
+                first_name: firstName,
+                last_name: lastName,
+                employee_id: id
+            });
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     return(
         <div className="container main-container">
             <div className="add-salesperson container-border">
                 <h3>Add a Salesperson</h3>
 
-                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="First Name..."/>
-                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Last Name..."/>
-                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Employee ID..."/>
+                <input className="form-control" placeholder="First Name..." 
+                    onChange={(e)=>{
+                        setFirstName(e.target.value)
+                    }}
+                />
+                <input className="form-control" placeholder="Last Name..."
+                    onChange={(e)=>{
+                        setLastName(e.target.value)
+                    }}
+                />
+                <input className="form-control" placeholder="Employee ID..."
+                    onChange={(e)=>{
+                        setId(e.target.value)
+                    }}
+                />
 
-                <button className="btn btn-primary">Create</button>
+                <button className="btn btn-primary"
+                    onClick={()=>{
+                        addNewSalesperson();
+                    }}
+                >
+                    Create
+                </button>
+                <p style={{color: 'red'}}>{err}</p>
             </div>
         </div>
     );

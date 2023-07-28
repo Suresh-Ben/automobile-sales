@@ -1,7 +1,29 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import axios from "axios";
+
 import './Body.css';
 
+const api = axios.create({
+  baseURL: ''
+})
+
 function SalesBody() {
+
+  const [sales, setSales] = useState(null);
+
+  const makeRequest = async () => {
+    try{
+      let allSales = await api.get('/sales');
+      setSales(allSales);
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(()=>{
+    makeRequest();
+  }, []);
+
     return(
         <div className="table-container">
             <h3>Sales</h3>
@@ -18,21 +40,25 @@ function SalesBody() {
                   </tr>
                 </thead>
                 <tbody>
-                  <Sale/>
+                  {
+                    sales? sales.map((sale)=>{
+                      return <Sale sale={sale}/>
+                    }) : null
+                  }
                 </tbody>
             </table>
         </div>
     );
 }
 
-function Sale() {
+function Sale({sale}) {
     return(
         <tr>
-          <td>XXXXX</td>
-          <td>XXXXX</td>
-          <td>XXXXX</td>
-          <td>XXXXX</td>
-          <td>XXXXX</td>
+          <td>{sale.salesperson}</td>
+          <td>{sale.salesperson}</td>
+          <td>{sale.customer}</td>
+          <td>{sale.automobile}</td>
+          <td>{sale.price}</td>
         </tr>
     );
 }

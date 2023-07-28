@@ -1,36 +1,62 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 import './Body.css';
 
+const api = axios.create({
+  baseURL: ''
+})
+
 function CustomersBody() {
-    return (
-        <div className="table-container">
-            <h3>Customers</h3>
-            
-            {/* table */}
-            <table className="table table-striped">
-                <thead>
-                  <tr>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Phone Number</th>
-                    <th scope="col">Address</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <Customer/>
-                </tbody>
-            </table>
-          </div>
-    );
+
+  const [customers, setCustomers] = useState(null);
+
+  const makeRequest = async () => {
+    try {
+      let allCustomers = await api.get('/customers');
+      setCustomers(allCustomers);
+    } catch(err) {
+      console.log(err);
+    }
+  }
+  
+  useEffect(()=>{
+    makeRequest();
+  }, []);
+
+  return (
+    <div className="table-container">
+      <h3>Customers</h3>
+      
+      {/* table */}
+      <table className="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">Phone Number</th>
+              <th scope="col">Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              customers? customers.map((customer)=>{
+                return <Customer customer={customer}/>
+              }) : null
+            }
+          </tbody>
+      </table>
+    </div>
+  );
 }
 
-function Customer() {
+function Customer({customer}) {
     return(
         <tr>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>(+91) 807 474 3084</td>
-          <td>Visakhapatanam, Ap</td>
+          <td>{customer.first_name}</td>
+          <td>{customer.last_name}</td>
+          <td>{customer.phone_number}</td>
+          <td>{customer.address}</td>
         </tr>
     );
 }

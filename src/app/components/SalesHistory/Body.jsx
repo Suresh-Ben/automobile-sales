@@ -6,7 +6,7 @@ function SalesHistoryBody() {
         <div className="table-container">
             <h3>Salesperson History</h3>
 
-            <label for="sale-salesperson">Salesperson</label>
+            <label htmlFor="sale-salesperson">Salesperson</label>
             <select className="form-select" id="sale-salesperson">
                 <option value="1">Choose an salesperson...</option>
                 <option value="2">One</option>
