@@ -4,7 +4,7 @@ import axios from "axios";
 import './Body.css';
 
 const api = axios.create({
-    baseURL: ''
+    baseURL: 'hhtp://localhost:8090/api'
 })
 
 function NewCustomerBody() {
