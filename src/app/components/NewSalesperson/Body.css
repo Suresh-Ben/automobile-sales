@@ -1,0 +1,20 @@
+.main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-border {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: .5rem;
+    border-color: #A8A196;
+    box-shadow: 0 0 3px #A8A196;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+
+.container-border input {
+    width: 25rem;
+    margin: 1rem 0;
+}

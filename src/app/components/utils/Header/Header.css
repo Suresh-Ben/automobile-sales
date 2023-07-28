@@ -1,0 +1,21 @@
+.header {
+    height: 5rem;
+    background-color: #35A29F;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-left {
+    margin: 0 3rem;
+}
+
+.header-right {
+    margin: 0 3rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.header-drop {
+    margin: 0 1rem;
+}
